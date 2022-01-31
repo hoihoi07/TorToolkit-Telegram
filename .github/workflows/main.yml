@@ -1,0 +1,28 @@
+# This is a workflow to deploy a leech bot to heroku using GitHub Actions
+
+name: Deploy To Heroku
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
+          docker_heroku_process_type: worker
+          stack: "container"
+          region: "eu"
+        env:
+          HD_ALD_USR: ${{secrets.ALD_USR}}
+          HD_BASE_URL_OF_BOT: ${{secrets.BASE_URL_OF_BOT}}
+          HD_BOT_TOKEN: ${{secrets.BOT_TOKEN}}
+          HD_API_ID: ${{secrets.API_ID}}
+          HD_API_HASH: ${{secrets.API_HASH}}
+          HD_OWNER_ID: ${{secrets.OWNER_ID}}
+          HD_DB_URI: ${{secrets.DB_URI}}
